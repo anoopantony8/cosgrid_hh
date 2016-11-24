@@ -145,11 +145,11 @@ class CreateCloudForm(workflows.Workflow):
         get_user_document().objects(username=request.user.username).first()
         user = get_user_document().objects(username=request.user.username).first()
         try:
-            if platform == "Cnext":
+            if platform == "netjson":
                 httpInst = httplib2.Http()
                 httpInst.add_credentials(name = username, \
                                      password = password)
-                url = endpoint + "/api/instance?resourceType=vm"
+                url = endpoint.strip('/') + "/users/"
                 resp, body = httpInst.request(url)
                 if resp.status == 200 :
                     cloud = tenantclouds(name = cloudname,cloud_type = cloud_type, 

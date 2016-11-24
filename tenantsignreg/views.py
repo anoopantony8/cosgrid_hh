@@ -176,11 +176,5 @@ def create_master_db_schema():
     action = actions(allowed=allowed)
     action.save()
     
-    cloud = clouds(name='Amazon',type=["Public"],credential_fields=["Public Key","Secret Key","Default Region"])
-    cloud.save()
-    cloud = clouds(name='Cnext',type=["Public"],credential_fields=["Public Key","Secret Key","Endpoint"])
-    cloud.save()
-    cloud = clouds(name='Hpcloud',type=["Public"],credential_fields=["Username","Password","Endpoint"])
-    cloud.save()
-    cloud = clouds(name='Openstack',type=["Private","Public"],credential_fields=["Username","Password","Endpoint"])
+    cloud = clouds(name='netjson',type=["Public"],credential_fields=["Username","Password","Endpoint"])
     cloud.save()

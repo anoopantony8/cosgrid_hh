@@ -47,7 +47,7 @@ class CreateCloudAction(workflows.Action):
 
 
     class Meta:
-        name = _("ADD Cloud")
+        name = _("VNF Manager")
         
     def __init__(self, *args, **kwargs):
         super(CreateCloudAction, self).__init__(*args, **kwargs)
@@ -121,7 +121,7 @@ class CreateCloud(workflows.Step):
 
 class CreateCloudForm(workflows.Workflow):
     slug = "add_cloud"
-    name = _("Add Cloud")
+    name = _("Add VNF Manager")
     template_name = 'wangle/cloud/addcloud/create.html'
     finalize_button_name = _("ADD")
     success_url = "horizon:wangle:cloud:index"

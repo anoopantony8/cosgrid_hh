@@ -6,7 +6,7 @@ from wangle import dashboard
 
 
 class Cloud(horizon.Panel):
-    name = _("Cloud")
+    name = _("VNF")
     slug = "cloud"
 
 

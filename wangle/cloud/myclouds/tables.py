@@ -144,7 +144,7 @@ class DeleteCloud(tables.BatchAction):
                
 class EditCloud(tables.LinkAction):
     name = "edit_cloud"
-    verbose_name = _("Edit cloud")
+    verbose_name = _("Edit VNF")
     data_type_singular = _("Edit Cloud ")
     data_type_plural = _(" Edit Cloud")
     url = "horizon:wangle:cloud:myclouds:edit_cloud"
@@ -159,17 +159,17 @@ class EditCloud(tables.LinkAction):
         return False
         
 class MyCloudsTable(tables.DataTable):
-    name = tables.Column("name",verbose_name=_("Cloud Name"))
-    id = tables.Column('id', verbose_name=_("Cloud Id"),hidden = True)
+    name = tables.Column("name",verbose_name=_("VNF Name"))
+    id = tables.Column('id', verbose_name=_("VNF Id"),hidden = True)
     type = tables.Column('platform', verbose_name=_("Platform"))
-    cloudtype = tables.Column("cloudtype",verbose_name=_("CloudType"))
+    cloudtype = tables.Column("cloudtype",verbose_name=_("VNF Type"))
     endpoint = tables.Column("endpoint",verbose_name=_("Endpoint/Default Region"))
     username = tables.Column("username",verbose_name=_("Username"))
      
    
     class Meta:
         name = "myclouds"
-        verbose_name = _("My Clouds")
+        verbose_name = _("My VNF Managers")
         table_actions = (DeleteCloud,)
         row_actions = (DeleteCloud,EditCloud)
        

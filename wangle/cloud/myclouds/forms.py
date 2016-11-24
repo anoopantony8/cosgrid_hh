@@ -41,7 +41,7 @@ class CloudEditAction(workflows.Action):
             transform=lambda x: ("%s " % (x.platform)))
          )
 
-    cloudname1 = forms.CharField(label=_("Cloud Name"),max_length=80)
+    cloudname1 = forms.CharField(label=_("VNF Name"),max_length=80)
     username1 = forms.CharField(max_length=80, label=_("User Name"))
     password1 = forms.RegexField(
         label=_("Password"),
@@ -64,7 +64,7 @@ class CloudEditAction(workflows.Action):
         return roles
 
     class Meta:
-        name = _("Edit Cloud")
+        name = _("Edit VNF")
 
     def __init__(self, *args, **kwargs):
         super(CloudEditAction, self).__init__(*args, **kwargs)
@@ -104,7 +104,7 @@ class CloudEdit(workflows.Step):
 class EditCloud(workflows.Workflow):
     
     slug = "edit_cloud"
-    name = _("Edit Cloud")
+    name = _("Edit VNF")
     finalize_button_name = _("Save")
     success_url = "horizon:wangle:cloud:index"
     default_steps = (CloudEdit, )

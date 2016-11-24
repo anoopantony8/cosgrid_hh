@@ -8,7 +8,7 @@ LOG = logging.getLogger(__name__)
 
 class AddCloud(tables.LinkAction):
     name = "Add_cloud"
-    verbose_name = _("Add cloud")
+    verbose_name = _("Add VNF Manager")
     data_type_singular = _("Add Cloud ")
     data_type_plural = _(" Add Cloud")
     url = "horizon:wangle:cloud:addcloud:create"
@@ -29,5 +29,5 @@ class AddCloudTable(tables.DataTable):
     class Meta:
         
         name = "addcloud"
-        verbose_name = _("Add Cloud")
+        verbose_name = _("VNF Manager")
         row_actions = (AddCloud,)

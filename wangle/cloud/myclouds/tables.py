@@ -23,7 +23,7 @@ class DeleteCloud(tables.BatchAction):
     classes = ('btn-danger', 'btn-terminate',)
     success_url = 'horizon:wangle:cloud:index'
     def allowed(self, request, instance=None):
-        if "Delete Cloud" in request.session['user_roleaccess']:
+        if "Delete VNF" in request.session['user_roleaccess']:
             return True
         return False
     
@@ -145,8 +145,8 @@ class DeleteCloud(tables.BatchAction):
 class EditCloud(tables.LinkAction):
     name = "edit_cloud"
     verbose_name = _("Edit VNF")
-    data_type_singular = _("Edit Cloud ")
-    data_type_plural = _(" Edit Cloud")
+    data_type_singular = _("Edit VNF ")
+    data_type_plural = _(" Edit VNF")
     url = "horizon:wangle:cloud:myclouds:edit_cloud"
     classes = ("ajax-modal", "btn-add")
    
@@ -154,7 +154,7 @@ class EditCloud(tables.LinkAction):
         return reverse("horizon:wangle:"
                        "cloud:myclouds:edit_cloud", args=[datum.id])
     def allowed(self, request, instance=None):
-        if "Edit Cloud" in request.session['user_roleaccess']:
+        if "Edit VNF" in request.session['user_roleaccess']:
             return True
         return False
         

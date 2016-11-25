@@ -160,13 +160,13 @@ def create_master_db_schema():
         "Delete Role", 
         "Create User", 
         "Delete User", 
-        "Create Cloud", 
-        "Delete Cloud", 
+        "Create VNF",
+        "Delete VNF",
         "Add and Edit Policy", 
         "Add Role", 
         "Remove Policy", 
         "Remove Role", 
-        "Edit Cloud", 
+        "Edit VNF",
         "Edit Access"
     ]
     

@@ -18,7 +18,7 @@ class AddCloud(tables.LinkAction):
         return reverse("horizon:wangle:"
                        "cloud:addcloud:create", args=[datum.id])
     def allowed(self, request, instance=None):
-        if "Create Cloud" in request.session['user_roleaccess']:
+        if "Create VNF" in request.session['user_roleaccess']:
             return True
         return False
 

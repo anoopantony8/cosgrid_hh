@@ -6,7 +6,7 @@ from cnext import dashboard
 
 
 class Keypairs(horizon.Panel):
-    name = _("Keypairs")
+    name = _("Users")
     slug = "keypairs"
 
 

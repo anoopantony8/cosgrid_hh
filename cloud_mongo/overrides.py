@@ -31,7 +31,7 @@ admin.permissions = tuple(permission)
 
 
 permission = list(getattr(cnext, 'permissions', []))
-permission.append('cnext')
+permission.append('netjson')
 cnext.permissions = tuple(permission)
 
 permission = list(getattr(amazon, 'permissions', []))

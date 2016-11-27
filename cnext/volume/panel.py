@@ -10,4 +10,4 @@ class Volume(horizon.Panel):
     slug = "volume"
 
 
-dashboard.Cnext.register(Volume)
+#dashboard.Cnext.register(Volume)

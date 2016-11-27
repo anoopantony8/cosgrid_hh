@@ -10,4 +10,4 @@ class Securitygroups(horizon.Panel):
     slug = "securitygroups"
 
 
-dashboard.Cnext.register(Securitygroups)
+#dashboard.Cnext.register(Securitygroups)

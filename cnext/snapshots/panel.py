@@ -10,4 +10,4 @@ class Snapshots(horizon.Panel):
     slug = "snapshots"
 
 
-dashboard.Cnext.register(Snapshots)
+#dashboard.Cnext.register(Snapshots)

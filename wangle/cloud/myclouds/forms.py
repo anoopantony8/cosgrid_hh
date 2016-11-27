@@ -134,11 +134,11 @@ class EditCloud(workflows.Workflow):
                         user.awsname = cloudname
                 else:
                     return False
-            if cloud.platform =="Cnext":
+            if cloud.platform =="netjson":
                 httpInst = httplib2.Http()
                 httpInst.add_credentials(name = username, \
                                      password = password)
-                url = endpoint + ":8130/apiv2/instance"   
+                url = endpoint.strip('/') + "/users/"
                 resp, body = httpInst.request(url)
                 if resp.status == 200 :
                     if user.cnextname == cloud.name:

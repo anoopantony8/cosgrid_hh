@@ -50,7 +50,7 @@ def set_session_from_user(request, user):
     for role in user.roles:
         for policy in role.policy:
             cloud = tenantclouds.objects(id = policy.cloudid.id).first()
-            if cloud.platform == "Cnext":
+            if cloud.platform == "netjson":
                 if cloud.name in user_ploicies:
                     user_ploicies[str(cloud.name)].append(((policy.provider).lower(),(policy.region).lower(),policy.allowed))
                 else:
@@ -81,7 +81,7 @@ def refresh_session_policies(request, user):
     for role in user.roles:
         for policy in role.policy:
             cloud = tenantclouds.objects(id = policy.cloudid.id).first()
-            if cloud.platform == "Cnext":
+            if cloud.platform == "netjson":
                 if cloud.name in user_ploicies:
                     user_ploicies[str(cloud.name)].append(((policy.provider).lower(),(policy.region).lower(),policy.allowed))
                 else:

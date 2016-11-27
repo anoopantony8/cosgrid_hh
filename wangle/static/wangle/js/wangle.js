@@ -2,87 +2,87 @@
 
 /*Show provider and region if platform is Cnext*/
 
-$(document).on('change','.input #id_cloudid', function()
-		{
-				platform = $('#id_cloudid option:selected').attr("data-platform");
-				if (platform == "Cnext")
-					{
-					$(".input #id_provider").closest(".control-group").show();
-					$(".input #id_region").closest(".control-group").show();
-					$(".input #id_providers").closest(".control-group").show();
-					$(".input #id_regions").closest(".control-group").show();
-					}
-				else
-					{
-					$(".input #id_provider").closest(".control-group").hide();
-					$(".input #id_region").closest(".control-group").hide();
-					$(".input #id_providers").closest(".control-group").hide();
-					$(".input #id_regions").closest(".control-group").hide();					
-					}
-					
-		}
-);
+//$(document).on('change','.input #id_cloudid', function()
+//		{
+//				platform = $('#id_cloudid option:selected').attr("data-platform");
+//				if (platform == "netjson")
+//					{
+//					$(".input #id_provider").closest(".control-group").show();
+//					$(".input #id_region").closest(".control-group").show();
+//					$(".input #id_providers").closest(".control-group").show();
+//					$(".input #id_regions").closest(".control-group").show();
+//					}
+//				else
+//					{
+//					$(".input #id_provider").closest(".control-group").hide();
+//					$(".input #id_region").closest(".control-group").hide();
+//					$(".input #id_providers").closest(".control-group").hide();
+//					$(".input #id_regions").closest(".control-group").hide();					
+//					}
+//					
+//		}
+//);
 
-$(document).on('change','.input #id_cloudids', function()
-		{
-				platform = $('#id_cloudids option:selected').attr("data-platform");
-				if (platform == "Cnext")
-					{
-					$(".input #id_provider").closest(".control-group").show();
-					$(".input #id_region").closest(".control-group").show();
-					$(".input #id_providers").closest(".control-group").show();
-					$(".input #id_regions").closest(".control-group").show();
-					}
-				else
-					{
-					$(".input #id_provider").closest(".control-group").hide();
-					$(".input #id_region").closest(".control-group").hide();
-					$(".input #id_providers").closest(".control-group").hide();
-					$(".input #id_regions").closest(".control-group").hide();					
-					}
-					
-		}
-);
-
-/*Js for region filtering according to provider selection */
-
-$(document).on('change','.input #id_provider', function()
-		{
-			insta_provider = $('#id_provider option:selected').attr("data-provider").toLowerCase();
-			$("#id_region").closest(".control-group").hide();
-			$("#id_region").val([]);
-			$(".input #id_region").closest(".control-group").show();
-            $(".input #id_region").children().hide();
-            $(".input #id_region").children('option[data-provider="'+ insta_provider+'"]').css('display','block');
-		}
-);
+//$(document).on('change','.input #id_cloudids', function()
+//		{
+//				platform = $('#id_cloudids option:selected').attr("data-platform");
+//				if (platform == "netjson")
+//					{
+//					$(".input #id_provider").closest(".control-group").show();
+//					$(".input #id_region").closest(".control-group").show();
+//					$(".input #id_providers").closest(".control-group").show();
+//					$(".input #id_regions").closest(".control-group").show();
+//					}
+//				else
+//					{
+//					$(".input #id_provider").closest(".control-group").hide();
+//					$(".input #id_region").closest(".control-group").hide();
+//					$(".input #id_providers").closest(".control-group").hide();
+//					$(".input #id_regions").closest(".control-group").hide();					
+//					}
+//					
+//		}
+//);
 
 /*Js for region filtering according to provider selection */
 
-$(document).on('change','.input #id_providers', function()
-		{
-			insta_provider = $('#id_providers option:selected').attr("data-provider").toLowerCase();
-			$("#id_regions").closest(".control-group").hide();
-			$("#id_regions").val([]);
-			$(".input #id_regions").closest(".control-group").show();
-            $(".input #id_regions").children().hide();
-            $(".input #id_regions").children('option[data-provider="'+ insta_provider+'"]').css('display','block');
-		}
-);
+//$(document).on('change','.input #id_provider', function()
+//		{
+//			insta_provider = $('#id_provider option:selected').attr("data-provider").toLowerCase();
+//			$("#id_region").closest(".control-group").hide();
+//			$("#id_region").val([]);
+//			$(".input #id_region").closest(".control-group").show();
+//            $(".input #id_region").children().hide();
+//            $(".input #id_region").children('option[data-provider="'+ insta_provider+'"]').css('display','block');
+//		}
+//);
+
+/*Js for region filtering according to provider selection */
+
+//$(document).on('change','.input #id_providers', function()
+//		{
+//			insta_provider = $('#id_providers option:selected').attr("data-provider").toLowerCase();
+//			$("#id_regions").closest(".control-group").hide();
+//			$("#id_regions").val([]);
+//			$(".input #id_regions").closest(".control-group").show();
+//            $(".input #id_regions").children().hide();
+//            $(".input #id_regions").children('option[data-provider="'+ insta_provider+'"]').css('display','block');
+//		}
+//);
 
 /* show checkbox selected on selecting the cloud */
 
 $(document).on('change','.input #id_cloudids', function(){
-	if ($('#.input #id_cloudids option:selected').text() == "Select Cloud")
-		{
-		$("#id_regions").closest(".control-group").hide();
-		$("#id_providers").closest(".control-group").hide();
-		}
+//	if ($('#.input #id_cloudids option:selected').text() == "Select Cloud")
+//		{
+//		$("#id_regions").closest(".control-group").hide();
+//		$("#id_providers").closest(".control-group").hide();
+//		}
 
-	else if ($('#.input #id_cloudids option:selected').attr("data-platform") != "Cnext")
+	if ($('#.input #id_cloudids option:selected').attr("data-platform") != "netjson")
 		{
-			$("#id_regions").closest(".control-group").hide();
-			$("#id_providers").closest(".control-group").hide();
+//			$("#id_regions").closest(".control-group").hide();
+//			$("#id_providers").closest(".control-group").hide();
 			a  = $('#.input #id_cloudids option:selected').attr("data-allowed")		
 			b = $('.input li').each(function(i, li) {
 		      var $product = $(li);  
@@ -112,61 +112,61 @@ $(document).on('change','.input #id_cloudids', function(){
 	                        }
 	                }
 		}
-	else
-	{
-		b = $('.input li').each(function(i, li) {
-		      var $product = $(li);  
-			});
-			b.hide()
-		$("#id_regions").closest(".control-group").show();
-		$("#id_providers").closest(".control-group").show();
-	}
+//	else
+//	{
+//		b = $('.input li').each(function(i, li) {
+//		      var $product = $(li);  
+//			});
+//			b.hide()
+//		$("#id_regions").closest(".control-group").show();
+//		$("#id_providers").closest(".control-group").show();
+//	}
 			
 });
 
 
 /* show the selected checkbox depend on the region selection */
 
-$(document).on('change','.input #id_regions', function(){
-	if ($('#.input #id_regions option:selected').text() == "Select Region")
-		{
-			b = $('.input li').each(function(i, li) {
-		      var $product = $(li);  
-			});
-			b.hide()
-		}
-	else
-	{
-			a  = $('#.input #id_regions option:selected').attr("data-allowed")		
-			b = $('.input li').each(function(i, li) {
-		      var $product = $(li);  
-			});
-			b.show()
-	        console.log(a)
-	        a1 =  a.replace(/[^a-zA-Z0-9]/g, " ");
-	        console.log(a1)
-	        b = $('.input li').each(function(i, li) {
-	                  var $product = $(li);  
-	                });
-	        console.log(b)
-	        console.log(b.length)
-	        for (i = 0;i<b.length;i++)
-	                {
-	                        var z = '#id_allowed_' + i;
-	                        console.log(z)
-	                        console.log(a1.indexOf(b[i].textContent) > 0)
-	                        console.log(b[i].textContent)
-	                        if(a1.indexOf(b[i].textContent) > 0)
-	                        {
-	                                $(z).prop('checked', true);                
-	                        }
-	                        else
-	                        {
-	                                $(z).prop('checked', false);      
-	                        }
-	                }
-	}
-});
+//$(document).on('change','.input #id_regions', function(){
+//	if ($('#.input #id_regions option:selected').text() == "Select Region")
+//		{
+//			b = $('.input li').each(function(i, li) {
+//		      var $product = $(li);  
+//			});
+//			b.hide()
+//		}
+//	else
+//	{
+//			a  = $('#.input #id_regions option:selected').attr("data-allowed")		
+//			b = $('.input li').each(function(i, li) {
+//		      var $product = $(li);  
+//			});
+//			b.show()
+//	        console.log(a)
+//	        a1 =  a.replace(/[^a-zA-Z0-9]/g, " ");
+//	        console.log(a1)
+//	        b = $('.input li').each(function(i, li) {
+//	                  var $product = $(li);  
+//	                });
+//	        console.log(b)
+//	        console.log(b.length)
+//	        for (i = 0;i<b.length;i++)
+//	                {
+//	                        var z = '#id_allowed_' + i;
+//	                        console.log(z)
+//	                        console.log(a1.indexOf(b[i].textContent) > 0)
+//	                        console.log(b[i].textContent)
+//	                        if(a1.indexOf(b[i].textContent) > 0)
+//	                        {
+//	                                $(z).prop('checked', true);                
+//	                        }
+//	                        else
+//	                        {
+//	                                $(z).prop('checked', false);      
+//	                        }
+//	                }
+//	}
+//});
 
 
 /* show the selected access on selecting the role */
@@ -245,44 +245,44 @@ $(document).on('click', 'input[type=submit][value=Create]', function(){
 	platform = $('#id_cloudid option:selected').attr("data-platform");
 	
 	
-	if(platform == "Cnext")
-		{   
-			if (($('#id_provider option:selected').attr("data-provider")) && $('#id_region option:selected').attr("data-name"))
-		     {	
-				return true;
-		     }
-			else
-			{
-			    alert("Please Select Provider and Region");
-                return false;
-			}
-		}
-	else{
-		   return true;
-		}
-	
+//	if(platform == "Cnext")
+//		{   
+//			if (($('#id_provider option:selected').attr("data-provider")) && $('#id_region option:selected').attr("data-name"))
+//		     {	
+//				return true;
+//		     }
+//			else
+//			{
+//			    alert("Please Select Provider and Region");
+//                return false;
+//			}
+//		}
+//	else{
+//		   return true;
+//		}
+        return true;
 });
 
 $(document).on('click', 'input[type=submit][value=SAVE]', function(){
 	platform = $('#id_cloudids option:selected').attr("data-platform");
 	
 	
-	if(platform == "Cnext")
-		{   
-			if (($('#id_providers option:selected').attr("data-provider")) && ($('#id_regions option:selected').attr("data-name")))
-		     {	
-				return true;
-		     }
-			else
-			{
-			    alert("Please Select Provider and Region");
-                return false;
-			}
-		}
-	else{
-		   return true;
-		}
-	
+//	if(platform == "Cnext")
+//		{   
+//			if (($('#id_providers option:selected').attr("data-provider")) && ($('#id_regions option:selected').attr("data-name")))
+//		     {	
+//				return true;
+//		     }
+//			else
+//			{
+//			    alert("Please Select Provider and Region");
+//                return false;
+//			}
+//		}
+//	else{
+//		   return true;
+//		}
+        return true;	
 });
 
 horizon.modals.addModalInitFunction(function (modal) {

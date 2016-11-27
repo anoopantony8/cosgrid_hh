@@ -69,16 +69,16 @@ class CnextTabAction(workflows.Action):
                                    transform=lambda x: ("%s" % (x.name)))
     )
 
-    provider = forms.ChoiceField(label=_("Provider"),
-                                 required=False,
-                                 help_text=_("Choose Your Provider" "."),
-                                 widget=fields.SelectWidget(data_attrs=('provider',),
-                                                            transform=lambda x: ("%s" % (x.provider))))
-    region = forms.ChoiceField(label=_("Region"),
-                                 required=False,
-                                 help_text=_("Choose Your Region" "."),
-                                 widget=fields.SelectWidget(data_attrs=('provider','name',),
-                                                            transform=lambda x: ("%s(%s)" % ((x.name).title(),(x.provider).title()))))
+    #provider = forms.ChoiceField(label=_("Provider"),
+    #                             required=False,
+    #                             help_text=_("Choose Your Provider" "."),
+    #                             widget=fields.SelectWidget(data_attrs=('provider',),
+    #                                                        transform=lambda x: ("%s" % (x.provider))))
+    #region = forms.ChoiceField(label=_("Region"),
+    #                             required=False,
+    #                             help_text=_("Choose Your Region" "."),
+    #                             widget=fields.SelectWidget(data_attrs=('provider','name',),
+    #                                                        transform=lambda x: ("%s(%s)" % ((x.name).title(),(x.provider).title()))))
     allowed = forms.MultipleChoiceField(label=_("Allowed Actions"),
                                        required=False,
                                        initial=["default"],
@@ -167,8 +167,8 @@ class CloudPolicy(workflows.Step):
     def contribute(self, data, context):
         if data:
             context['cloudid'] = data.get("cloudid", None)
-            context['provider'] = data.get("provider", None)
-            context['region'] = data.get("region", None)
+            #context['provider'] = data.get("provider", None)
+            #context['region'] = data.get("region", None)
             context['allowed'] = data.get("allowed", None)
         return context 
 
@@ -188,8 +188,8 @@ class CreateRoleForm(workflows.Workflow):
         roletype = context.get('roletype', None)
         access = context.get('access', None)
         cloudid = context.get('cloudid', None)
-        provider = context.get('provider', None)  
-        region = context.get('region', None)  
+        #provider = context.get('provider', None)  
+        #region = context.get('region', None)  
         allowed = context.get('allowed', None)  
     
 
@@ -198,11 +198,12 @@ class CreateRoleForm(workflows.Workflow):
                 access.remove("All")
             if ("All" in allowed):
                 allowed.remove("All")               
-            if (cloudid == '') & (allowed == []) & (provider == '') & (region == ''):
+            if (cloudid == '') & (allowed == []):
+            #if (cloudid == '') & (allowed == []) & (provider == '') & (region == ''):
                 role = roledetail(name = rolename,roletype = roletype,access = access,policy = [], tenantid = request.user.tenantid.id)
                 role.save()
             else:
-                cloud = PolicyDoc(cloudid = cloudid,provider = provider, region = region, allowed = allowed)
+                cloud = PolicyDoc(cloudid = cloudid,provider = '', region = '', allowed = allowed)
                 role = roledetail(name = rolename,roletype = roletype,access = access,policy = [cloud], tenantid = request.user.tenantid.id)
                 role.save()
             return True
@@ -226,16 +227,16 @@ class PolicyAddAction(workflows.Action):
                                    transform=lambda x: ("%s" % (x.name)))
     )
 
-    providers = forms.ChoiceField(label=_("Provider"),
-                                 required=False,
-                                 help_text=_("Choose Your Provider" "."),
-                                 widget=fields.SelectWidget(data_attrs=('provider',),
-                                                            transform=lambda x: ("%s" % (x.provider))))
-    regions = forms.ChoiceField(label=_("Region"),
-                                 required=False,
-                                 help_text=_("Choose Your Region" "."),
-                                 widget=fields.SelectWidget(data_attrs=('provider','name','allowed',),
-                                                            transform=lambda x: ("%s(%s)" % ((x.name).title(),(x.provider).title()))))
+    #providers = forms.ChoiceField(label=_("Provider"),
+    #                             required=False,
+    #                             help_text=_("Choose Your Provider" "."),
+    #                             widget=fields.SelectWidget(data_attrs=('provider',),
+    #                                                        transform=lambda x: ("%s" % (x.provider))))
+    #regions = forms.ChoiceField(label=_("Region"),
+    #                             required=False,
+    #                             help_text=_("Choose Your Region" "."),
+    #                             widget=fields.SelectWidget(data_attrs=('provider','name','allowed',),
+    #                                                        transform=lambda x: ("%s(%s)" % ((x.name).title(),(x.provider).title()))))
     
     allowed = forms.MultipleChoiceField(label=_("Allowed Actions"),
                                        required=False,
@@ -253,7 +254,7 @@ class PolicyAddAction(workflows.Action):
                 if roles.policy:
                     for a in roles.policy:
                         if cloud.name == a.cloudid.name:
-                            if a.cloudid.platform != "Cnext":
+                            if a.cloudid.platform != "netjson":
                                 cloud.__dict__['allowed'] = a.allowed
                             else:
                                 pass
@@ -357,8 +358,8 @@ class PolicyAdd(workflows.Step):
             post = self.workflow.request.POST
             context['id'] = data.get("id","")
             context['cloudid'] = data.get("cloudids", "")
-            context['provider'] = data.get("providers", None)
-            context['region'] = data.get("regions", None)
+            #context['provider'] = data.get("providers", None)
+            #context['region'] = data.get("regions", None)
             context['allowed'] = data.get("allowed", "")
         return context 
 
@@ -373,19 +374,19 @@ class AddPolicy(workflows.Workflow):
     def handle(self, request, context):
         id = context.get('id', None) 
         cloudid = context.get('cloudid', None)
-        provider = context.get('provider', None)  
-        region = context.get('region', None)
+        #provider = context.get('provider', None)  
+        #region = context.get('region', None)
         allowed = context.get('allowed', None)
         try:
             if "All" in allowed:
                 allowed.remove("All")
-            i = {"cloudid":cloudid,"allowed":allowed,"provider":provider,"region":region}
+            i = {"cloudid":cloudid,"allowed":allowed,"provider":'',"region":''}
             roles = roledetail.objects(id=id).first()
             policies = []
             flag = False
             if roles.policy:
                 for r in roles.policy:
-                    if str(r.provider).lower() == str(provider).lower() and str(r.region).lower() == str(region).lower() and str(r.cloudid.id) == str(cloudid):
+                    if str(r.cloudid.id) == str(cloudid):
                         roledetail.objects(id=id).update(pull__policy=r)
                         policies.append(i)
                         flag = True

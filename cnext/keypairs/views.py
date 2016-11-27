@@ -10,6 +10,7 @@ from .tables import KeypairsTable
 from horizon import forms
 from horizon import tabs
 from cnext_api import api
+from netjson_api import api as netjson_api
 from cnext.keypairs import forms as project_forms
 from cnext.keypairs import tabs as project_tabs
 
@@ -19,33 +20,34 @@ class IndexView(tables.DataTableView):
     template_name = 'cnext/keypairs/index.html'
 
     def get_data(self):
-        keypairs = []
+        users = []
         try:
-            keypairs = api.keypairs(self.request)
+            users = netjson_api.user_list(self.request)
         except:
             exceptions.handle(self.request,
-                              _('Unable to retrieve keypairs'))
-        return keypairs
+                              _('Unable to retrieve users'))
+        return users
 
        
     def get_context_data(self,**kwargs):
         context = super(IndexView, self).get_context_data()
-        context["provider"] = api.providers(self.request)
-        context["region"] = api.region(self.request)
+        #context["provider"] = api.providers(self.request)
+        #context["region"] = api.region(self.request)
         return context
 
 
 class CreateView(forms.ModalFormView):
     form_class = project_forms.CreateKeypair
     template_name = 'cnext/keypairs/create.html'
-    success_url = 'horizon:cnext:keypairs:download'
+    success_url = 'horizon:cnext:keypairs:index'
 
     def get_success_url(self):
-        return reverse(self.success_url,
-                       kwargs={"keypair_name": self.request.POST['name'],
-                               "provider": self.request.POST['key_provider_list'],
-                               "region": self.request.POST['key_region_list']
-                               })
+        return reverse(self.success_url
+                       #,kwargs={"keypair_name": self.request.POST['name'],
+                       #        "provider": self.request.POST['key_provider_list'],
+                       #        "region": self.request.POST['key_region_list']
+                       #        }
+        )
 
 
 class ImportView(forms.ModalFormView):
@@ -96,9 +98,9 @@ class DetailView(tabs.TabView):
     
     def get_data(self):
             try:
-                key_pair = api.inst_detail(self.request,self.kwargs['keypairs_id'])
-            except Exception:
-                redirect = reverse('horizon:cnext:instances:index')
+                key_pair = netjson_api.user_view(self.request,self.kwargs['keypairs_id'])
+            except Exception, e:
+                redirect = reverse('horizon:cnext:keypairs:index')
                 exceptions.handle(self.request,
                                   _('Unable to retrieve keypair details.'),
                                   redirect=redirect)
@@ -114,7 +116,7 @@ class AccountChange(forms.ModalFormView):
     success_url = reverse_lazy('horizon:cnext:keypairs:index')
      
     def get_initial(self):
-        cnext_accounts = api.get_accounts(self.request)
+        cnext_accounts = netjson_api.get_accounts(self.request)
         return {
                 'account_choices':cnext_accounts
                 }

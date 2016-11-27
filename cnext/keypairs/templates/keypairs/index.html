@@ -1,10 +1,9 @@
 {% extends 'cnext/base.html' %}
 {% load i18n %}
-{% block title %}{% trans "Keypairs" %}{% endblock %}
+{% block title %}{% trans "Users" %}{% endblock %}
 
 {% block page_header %}
-  {% include "horizon/common/_page_header.html" with title=_("Keypairs") %}
-  {% include "cnext/_provider_region.html" with title=provider title1=region %}
+  {% include "horizon/common/_page_header.html" with title=_("Users") %}
 {% endblock page_header %}
 
 {% block cnext_main %}

@@ -54,7 +54,7 @@ class CloudMongoBackend(object):
             cloud1 = []
             cloud2 = []
             cloud1 = sum([[y.cloudid for y in i.policy 
-                          if y.cloudid.platform == "Cnext"] 
+                          if y.cloudid.platform == "netjson"] 
                          for i in user.roles], [])
             cloud2 = sum([[y.cloudid for y in i.policy 
                           if y.cloudid.platform == "Amazon"] 
@@ -202,17 +202,16 @@ class CloudMongoBackend(object):
             project_name.name = user.openstackname
 
         if not user.cnextpublickey:
-            if "cnext" in clouds:
+            if "netjson" in clouds:
                 clouds.remove("cnext")
-            if "cnext" in role_perms:
+            if "netjson" in role_perms:
                 role_perms.remove("cnext")
         if not user.awspublickey:
             if "amazon" in clouds:
                 clouds.remove("amazon")
             if "amazon" in role_perms:
                 role_perms.remove("amazon")    
-        
-        if "cnext" in clouds:
+        if "netjson" in clouds:
                 cproject_name = horizon.get_dashboard("cnext")
                 cproject_name.name = user.cnextname   
         if "hpcloud" in clouds:

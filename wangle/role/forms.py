@@ -253,7 +253,7 @@ class PolicyAddAction(workflows.Action):
                 if roles.policy:
                     for a in roles.policy:
                         if cloud.name == a.cloudid.name:
-                            if a.cloudid.platform != "Cnext":
+                            if a.cloudid.platform != "netjson":
                                 cloud.__dict__['allowed'] = a.allowed
                             else:
                                 pass

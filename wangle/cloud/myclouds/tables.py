@@ -84,10 +84,10 @@ class DeleteCloud(tables.BatchAction):
                     user.token = None
                     user.openstackname = None
         
-        if cloud.platform =="Cnext":
+        if cloud.platform =="netjson":
             if user.cnextname == cloud.name:
                 clouds = sum([[y.cloudid for y in i.policy 
-                               if y.cloudid.platform == "Cnext"] 
+                               if y.cloudid.platform == "netjson"] 
                               for i in user.roles], [])
                 if clouds:
                     user.cnextpublickey = clouds[0]["cloud_meta"]["publickey"]

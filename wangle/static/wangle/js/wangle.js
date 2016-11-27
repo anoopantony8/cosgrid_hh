@@ -5,7 +5,7 @@
 $(document).on('change','.input #id_cloudid', function()
 		{
 				platform = $('#id_cloudid option:selected').attr("data-platform");
-				if (platform == "Cnext")
+				if (platform == "netjson")
 					{
 					$(".input #id_provider").closest(".control-group").show();
 					$(".input #id_region").closest(".control-group").show();
@@ -26,7 +26,7 @@ $(document).on('change','.input #id_cloudid', function()
 $(document).on('change','.input #id_cloudids', function()
 		{
 				platform = $('#id_cloudids option:selected').attr("data-platform");
-				if (platform == "Cnext")
+				if (platform == "netjson")
 					{
 					$(".input #id_provider").closest(".control-group").show();
 					$(".input #id_region").closest(".control-group").show();
@@ -79,7 +79,7 @@ $(document).on('change','.input #id_cloudids', function(){
 		$("#id_providers").closest(".control-group").hide();
 		}
 
-	else if ($('#.input #id_cloudids option:selected').attr("data-platform") != "Cnext")
+	else if ($('#.input #id_cloudids option:selected').attr("data-platform") != "netjson")
 		{
 			$("#id_regions").closest(".control-group").hide();
 			$("#id_providers").closest(".control-group").hide();

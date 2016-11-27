@@ -21,6 +21,6 @@ def cnext_switch(request):
     if dashboard_name == "cnext":
         if request.user.is_authenticated() and needs_tenants:
             context["cnext_tenants"] = sum([[y.cloudid for y in i.policy 
-                                             if y.cloudid.platform == "Cnext"] for i in 
+                                             if y.cloudid.platform == "netjson"] for i in 
                                             request.user.roles], [])
     return context

@@ -97,9 +97,9 @@ class DetailView(tabs.TabView):
     
     def get_data(self):
             try:
-                key_pair = api.inst_detail(self.request,self.kwargs['keypairs_id'])
-            except Exception:
-                redirect = reverse('horizon:cnext:instances:index')
+                key_pair = netjson_api.user_view(self.request,self.kwargs['keypairs_id'])
+            except Exception, e:
+                redirect = reverse('horizon:cnext:keypairs:index')
                 exceptions.handle(self.request,
                                   _('Unable to retrieve keypair details.'),
                                   redirect=redirect)
@@ -115,7 +115,7 @@ class AccountChange(forms.ModalFormView):
     success_url = reverse_lazy('horizon:cnext:keypairs:index')
      
     def get_initial(self):
-        cnext_accounts = api.get_accounts(self.request)
+        cnext_accounts = netjson_api.get_accounts(self.request)
         return {
                 'account_choices':cnext_accounts
                 }

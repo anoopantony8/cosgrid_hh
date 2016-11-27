@@ -1,6 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from horizon import tables
 from cnext_api import api
+from netjson_api import api as netjson_api
 
 
 class DeleteKeyPairs(tables.BatchAction):
@@ -29,7 +30,7 @@ class DeleteKeyPairs(tables.BatchAction):
         return False
 
     def action(self, request, obj_id):
-        api.delete_keypair(request, obj_id)        
+        netjson_api.user_delete(request, obj_id)        
 
 
 class UpdateRow(tables.Row):

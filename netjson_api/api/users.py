@@ -17,7 +17,6 @@ class User:
 
 def user_create(request, req_body):
     try:
-        print req_body
         credential_username = request.user.cnextpublickey
         credential_password = trail.encode_decode(request.user.cnextprivatekey, "decode")
         endpoint = request.user.cnextendpoint
@@ -88,4 +87,23 @@ def user_view(request, user_id):
     except Exception as e:
         logging.debug("Unable to get user %s" % e.message)
         return {}
+
+def user_delete(request, user_id):
+    try:
+        credential_username = request.user.cnextpublickey
+        credential_password = trail.encode_decode(request.user.cnextprivatekey, "decode")
+        endpoint = request.user.cnextendpoint
+        httpInst = httplib2.Http()
+        httpInst.add_credentials(name=credential_username, password=credential_password)
+        users = list()
+        url = endpoint.strip('/') + "/users/%s" % user_id
+        resp = requests.delete(url=url, auth=(credential_username, credential_password))
+        LOG.debug("Users Delete Status %s" % resp.status_code)
+        if resp.status_code == 204:
+            return True
+        else:
+            raise
+    except Exception as e:
+        logging.debug("Unable to create user %s" % e.message)
+        return False
 

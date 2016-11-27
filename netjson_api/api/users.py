@@ -15,6 +15,27 @@ class User:
         self.email = email
         self.groups = groups
 
+def user_create(request, req_body):
+    try:
+        print req_body
+        credential_username = request.user.cnextpublickey
+        credential_password = trail.encode_decode(request.user.cnextprivatekey, "decode")
+        endpoint = request.user.cnextendpoint
+        httpInst = httplib2.Http()
+        httpInst.add_credentials(name=credential_username, password=credential_password)
+        users = list()
+        url = endpoint.strip('/') + "/users/"
+        resp = requests.post(url=url, auth=(credential_username, credential_password), json=req_body)
+        LOG.debug("Users Create Status %s" % resp.status_code)
+        body = resp.json()
+        if resp.status_code == 201 and body:
+            return body
+        else:
+            raise
+        return body
+    except Exception as e:
+        logging.debug("Unable to create user %s" % e.message)
+        return {}
 
 def user_list(request):
     try:

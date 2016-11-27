@@ -23,7 +23,9 @@ from django.core import validators
 from django.utils.translation import ugettext_lazy as _
 from horizon import exceptions, forms, messages
 from horizon.utils import fields
+from horizon.utils import validators as horizon_validators
 from cnext_api import api
+from netjson_api import api as netjson_api
 from cnext.resource import provider_keypairs_choices,region_keypairs_choices
 from mongoengine.django.mongo_auth.models import get_user_document
 
@@ -38,43 +40,39 @@ class Regionlist():
 
 class CreateKeypair(forms.SelfHandlingForm):
 
-    name = forms.CharField(max_length="20",
-                           label=_("Keypair Name"),
+    username = forms.CharField(max_length="20",
+                           label=_("UserName"),
                            validators=[validators.validate_slug],
                            error_messages={'invalid': _('Keypair names may '
                                 'only contain letters, numbers, underscores '
                                 'and hyphens.')})
-    key_provider_list = forms.ChoiceField(
-        label=_("Providers List"),
+    password = forms.RegexField(
+        label=_("Password"),
         required=True,
-        )
-    key_region_list = forms.ChoiceField(
-        label=_("Regions List"),
-        required=True,
-        widget=fields.SelectWidget(data_attrs=('provider', 'region', ),
-                                   transform=lambda x: ("%s " % (x.name)))
-        )
+        widget=forms.PasswordInput(render_value=False),
+        regex=horizon_validators.password_validator(),
+        error_messages={'invalid': horizon_validators.password_validator_msg()})
+    email = forms.EmailField(label=_("Email"))
+    groups = forms.MultipleChoiceField(label=_("Groups List"))
 
     def handle(self, request, data):
-        return True  # We just redirect to the download view.
+        user = netjson_api.user_create(request, data)
+        if user:
+            messages.success(request, _('User Create Success: %s')
+                                       % data['username'])
+        else:
+            messages.error(request, _('Unable to create a user: %s')
+                                       % data['username'])
+        return True
     def __init__(self, request, *args, **kwargs):
         forms.SelfHandlingForm.__init__(self, request, *args, **kwargs)
-        provider_list = api.providers(self.request)
-        region_list = api.region(self.request)
-        p = [("", _("Select Provider"))]
-        for provider in provider_list:
-            if provider.provider in provider_keypairs_choices:
-                p.append((provider.provider.lower(),provider.provider))
+        group_list = netjson_api.group_list(self.request)
+        p = []
+        for group in group_list:
+            p.append((group.url, group.name))
         t = tuple(p)
         tuple_providers = t
-        self.fields['key_provider_list'].choices = tuple_providers
-        r = [("", _("Select Region"))]
-        for region in region_list:
-            if region.name in region_keypairs_choices:
-                r.append((region.name,Regionlist(region.provider,region.name)))
-        r = tuple(r)
-        tuple_regions = r
-        self.fields['key_region_list'].choices = tuple_regions
+        self.fields['groups'].choices = tuple_providers
 
 
 class ImportKeypair(forms.SelfHandlingForm):

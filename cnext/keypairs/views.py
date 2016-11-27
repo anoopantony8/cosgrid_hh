@@ -25,7 +25,7 @@ class IndexView(tables.DataTableView):
             users = netjson_api.user_list(self.request)
         except:
             exceptions.handle(self.request,
-                              _('Unable to retrieve keypairs'))
+                              _('Unable to retrieve users'))
         return users
 
        
@@ -39,14 +39,15 @@ class IndexView(tables.DataTableView):
 class CreateView(forms.ModalFormView):
     form_class = project_forms.CreateKeypair
     template_name = 'cnext/keypairs/create.html'
-    success_url = 'horizon:cnext:keypairs:download'
+    success_url = 'horizon:cnext:keypairs:index'
 
     def get_success_url(self):
-        return reverse(self.success_url,
-                       kwargs={"keypair_name": self.request.POST['name'],
-                               "provider": self.request.POST['key_provider_list'],
-                               "region": self.request.POST['key_region_list']
-                               })
+        return reverse(self.success_url
+                       #,kwargs={"keypair_name": self.request.POST['name'],
+                       #        "provider": self.request.POST['key_provider_list'],
+                       #        "region": self.request.POST['key_region_list']
+                       #        }
+        )
 
 
 class ImportView(forms.ModalFormView):

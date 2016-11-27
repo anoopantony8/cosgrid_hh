@@ -8,8 +8,9 @@ LOG = logging.getLogger(__name__)
 
 
 class Group:
-    def __init__(self, id, name=None):
+    def __init__(self, id, url=None, name=None):
         self.id = id
+        self.url = url
         self.name = name
 
 
@@ -20,7 +21,7 @@ def group_list(request):
         endpoint = request.user.cnextendpoint
         httpInst = httplib2.Http()
         httpInst.add_credentials(name=credential_username, password=credential_password)
-        groupss = list()
+        groups = list()
         url = endpoint.strip('/') + "/groups/"
         resp = requests.get(url=url, auth=(credential_username, credential_password))
         LOG.debug("Groups List Status %s" % resp.status_code)
@@ -28,7 +29,7 @@ def group_list(request):
         if resp.status_code == 200 and body:
             group_list = body['results']
             for group in group_list:
-                groups.append(Group(group['id'], group['name']))
+                groups.append(Group(group['id'], group['url'], group['name']))
         else:
             raise
         return groups

@@ -36,15 +36,15 @@ class UpdateRow(tables.Row):
     ajax = True
 
     def get_data(self, request, key_id):
-        keypair = api.inst_detail(request, key_id)
+        #keypair = api.inst_detail(request, key_id)
         return keypairs
  
     def load_cells(self, keypairs=None):
         super(UpdateRow, self).load_cells(keypairs)
         # Tag the row with the image category for client-side filtering.
-        kp = self.datum
-        self.attrs['data-provider'] = kp.provider
-        self.attrs['data-region'] = kp.region   
+        #kp = self.datum
+        #self.attrs['data-provider'] = kp.provider
+        #self.attrs['data-region'] = kp.region   
 
 
 class ImportKeyPair(tables.LinkAction):
@@ -68,20 +68,17 @@ class CreateKeyPair(tables.LinkAction):
 
 
 class KeypairsTable(tables.DataTable):
-    name = tables.Column("name",link=("horizon:cnext:keypairs:detail"), verbose_name=_("Keypair Name"))
-    instanceId = tables.Column('id', verbose_name=_("Instance Id"))
-    provider = tables.Column('provider', verbose_name=_("Provider"))
-    region = tables.Column('region', verbose_name=_("Region"))
-    status = tables.Column('status', verbose_name=_("Status"))
-    privatekey = tables.Column("privatekey", verbose_name=_("PrivateKey"), hidden=True )
+    username = tables.Column("username",link=("horizon:cnext:keypairs:detail"), verbose_name=_("UserName"))
+    email = tables.Column('email', verbose_name=_("Email"))
+    groups = tables.Column('groups', verbose_name=_("Groups"))
 
-    def get_object_id(self, keypair):
-        return keypair.id
+    def get_object_id(self, user):
+        return user.id
 
     class Meta:
-        name = "keypairs"
+        name = "users"
         row_class = UpdateRow
-        verbose_name = _("Keypairs")
+        verbose_name = _("Users")
         table_actions = (CreateKeyPair,)
         row_actions = (DeleteKeyPairs,
                        )

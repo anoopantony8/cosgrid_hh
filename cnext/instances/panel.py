@@ -10,4 +10,4 @@ class Instances(horizon.Panel):
     slug = "instances"
 
 
-dashboard.Cnext.register(Instances)
+#dashboard.Cnext.register(Instances)

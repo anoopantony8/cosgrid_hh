@@ -10,4 +10,4 @@ class Images(horizon.Panel):
     slug = "images"
 
 
-dashboard.Cnext.register(Images)
+#dashboard.Cnext.register(Images)

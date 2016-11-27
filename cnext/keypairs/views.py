@@ -10,6 +10,7 @@ from .tables import KeypairsTable
 from horizon import forms
 from horizon import tabs
 from cnext_api import api
+from netjson_api import api as netjson_api
 from cnext.keypairs import forms as project_forms
 from cnext.keypairs import tabs as project_tabs
 
@@ -19,19 +20,19 @@ class IndexView(tables.DataTableView):
     template_name = 'cnext/keypairs/index.html'
 
     def get_data(self):
-        keypairs = []
+        users = []
         try:
-            keypairs = api.keypairs(self.request)
+            users = netjson_api.user_list(self.request)
         except:
             exceptions.handle(self.request,
                               _('Unable to retrieve keypairs'))
-        return keypairs
+        return users
 
        
     def get_context_data(self,**kwargs):
         context = super(IndexView, self).get_context_data()
-        context["provider"] = api.providers(self.request)
-        context["region"] = api.region(self.request)
+        #context["provider"] = api.providers(self.request)
+        #context["region"] = api.region(self.request)
         return context
 
 

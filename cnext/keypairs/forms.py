@@ -110,7 +110,7 @@ class AccountChangeForm(forms.SelfHandlingForm):
     def handle(self, request, data):
         user = get_user_document().objects(username=request.user.username).first()
         cnext_clouds = sum([[y.cloudid for y in i.policy if 
-                            y.cloudid.platform == "Cnext"] for i in request.user.roles], [])
+                            y.cloudid.platform == "netjson"] for i in request.user.roles], [])
         for cloud in cnext_clouds:
             if str(cloud.id) == str(data['account_name']):
                 user.cnextpublickey = cloud["cloud_meta"]["publickey"]

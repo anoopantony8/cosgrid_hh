@@ -16,7 +16,7 @@ class DeleteKeyPairs(tables.BatchAction):
     def allowed(self, request, datum):
         if "Tenant Admin" in request.session['user_roles']:
             if datum:
-                if datum.status not in ("deleting", "deleted"):
+                if datum.username != request.user.cnextpublickey:
                     return True
                 else:
                     return False
@@ -24,7 +24,7 @@ class DeleteKeyPairs(tables.BatchAction):
         if datum:
             for policy in request.session['user_policies'].get(request.user.cnextname):
                 if ("Delete KP" in policy[2] and (datum.provider,datum.region) == (policy[0],policy[1])):
-                    if datum.status not in ("deleting", "deleted"):
+                    if datum.status != request.user.cnextpublickey:
                         return True
         return False
 
@@ -56,7 +56,7 @@ class ImportKeyPair(tables.LinkAction):
 
 class CreateKeyPair(tables.LinkAction):
     name = "create"
-    verbose_name = _("Create Keypair")
+    verbose_name = _("Create User")
     url = "horizon:cnext:keypairs:create"
     classes = ("ajax-modal", "btn-create")
 

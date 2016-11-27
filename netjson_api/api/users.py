@@ -3,6 +3,7 @@ import logging
 import httplib2
 import requests
 from cloud_mongo import trail
+from netjson_api.api import groups
 
 LOG = logging.getLogger(__name__)
 
@@ -30,7 +31,11 @@ def user_list(request):
         if resp.status_code == 200 and body:
             users_list = body['results']
             for user in users_list:
-                users.append(User(user['id'], user['username'], user['email'], user['groups']))
+                group_names = list()
+                for group_url in user['groups']:
+                    group_names.append(groups.group_name_from_url(request, group_url))
+                group_names = ', '.join(group_names)
+                users.append(User(user['id'], user['username'], user['email'], group_names))
         else:
             raise
         return users
@@ -51,12 +56,15 @@ def user_view(request, user_id):
         LOG.debug("Users View Status %s" % resp.status_code)
         body = resp.json()
         if resp.status_code == 200 and body:
+            group_names = list()
+            for group_url in body['groups']:
+                group_names.append(groups.group_name_from_url(request, group_url))
+            body['groups'] = ', '.join(group_names)
             return body
         else:
             raise
         return {}
     except Exception as e:
-        logging.debug("Unable to get users %s" % e.message)
-        users = list()
-    return users
+        logging.debug("Unable to get user %s" % e.message)
+        return {}
 

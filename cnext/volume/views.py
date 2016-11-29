@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from cnext.volume import forms as project_forms
 from cnext.volume import tabs as project_tabs
 from cnext_api import api
+from netjson_api import api as netjson_api
 from horizon import forms, tabs, tables, exceptions
 from .tables import TabledisplayTable
 
@@ -12,18 +13,18 @@ class IndexView(tables.DataTableView):
     template_name = 'cnext/volume/index.html'
  
     def get_data(self):
-        volume = []
+        templates = []
         try:
-            volume = api.volumelist(self.request)
+            templates = netjson_api.template_list(self.request)
         except:
             exceptions.handle(self.request,
-                              _('Unable to retrieve keypairs'))
-        return volume
+                              _('Unable to retrieve templates'))
+        return templates
     
     def get_context_data(self,**kwargs):
         context = super(IndexView, self).get_context_data()
-        context["provider"] = api.providers(self.request)
-        context["region"] = api.region(self.request)
+        #context["provider"] = api.providers(self.request)
+        #context["region"] = api.region(self.request)
         return context
 
 class CreateView(forms.ModalFormView):

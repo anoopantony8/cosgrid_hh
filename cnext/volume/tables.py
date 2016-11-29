@@ -113,18 +113,21 @@ class RefreshInst(tables.BatchAction):
 
 
 class TabledisplayTable(tables.DataTable):
-    volume_name =tables.Column("volume_name",verbose_name=_("Volume Name"),
+    name =tables.Column("name",verbose_name=_("Name"),
                                              link=("horizon:cnext:volume:detail"))
-    instanceid =tables.Column("size",verbose_name=_("Size"))
-    name = tables.Column("name",verbose_name=_("Instance Id"))
-    provider= tables.Column("provider", verbose_name=_("Provider"))
-    region= tables.Column("region", verbose_name=_("Region"))
-    status = tables.Column("status",
-                         verbose_name=_("Status"))    
+    backend =tables.Column("backend",verbose_name=_("Backend"))
+    template_type = tables.Column("template_type",verbose_name=_("Type"))
+    default = tables.Column("default", verbose_name=_("Default"))
+    auto_cert = tables.Column("auto_cert", verbose_name=_("auto_cert"))
+    vpn = tables.Column("vpn",
+                         verbose_name=_("vpn"))    
+
+    def get_object_id(self, template):
+        return template.name
  
     class Meta:
-        name = "Volumes"
-        verbose_name = _("Volumes")
+        name = "templates"
+        verbose_name = _("Templates")
         #status_columns = ["status"]
-        table_actions = (VolumesFilterAction,CreateVolume,DeleteVolume,)
-        row_actions = (EditAttachments,DeleteVolume,DeleteVm,)
+        #table_actions = (VolumesFilterAction,CreateVolume,DeleteVolume,)
+        #row_actions = (EditAttachments,DeleteVolume,DeleteVm,)

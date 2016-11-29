@@ -6,8 +6,8 @@ from cnext import dashboard
 
 
 class Volume(horizon.Panel):
-    name = _("Volume")
+    name = _("Templates")
     slug = "volume"
 
 
-#dashboard.Cnext.register(Volume)
+dashboard.Cnext.register(Volume)

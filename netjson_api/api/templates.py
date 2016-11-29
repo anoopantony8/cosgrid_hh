@@ -31,7 +31,6 @@ def template_list(request):
         if resp.status_code == 200 and body:
             templates_list = body['results']
             for template in templates_list:
-		print template['name'], template['backend']
                 templates.append(Template(template['name'], template['backend'], template['type'],
 					 template['default'], template['auto_cert'], template['vpn']))
         else:

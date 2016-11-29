@@ -2,6 +2,7 @@ from horizon import tables, exceptions
 from .tables import ImagesTable
 from django.utils.translation import ugettext_lazy as _
 from cnext_api import api
+from netjson_api import api as netjson_api
 
 from cnext.images import tabs as project_tabs
 from cnext.images import forms as project_forms
@@ -18,18 +19,18 @@ class IndexView(tables.DataTableView):
 
     def get_data(self):
         try:
-            images = []
-            images = api.images(self.request)
+            vpns = []
+            vpns = netjson_api.vpn_list(self.request)
         except:
-            images = []
+            vpns = []
             exceptions.handle(self.request, _('Unable to retrieve images'))
-        return images
+        return vpns
 
     
     def get_context_data(self,**kwargs):
         context = super(IndexView, self).get_context_data()
-        context["provider"] = api.providers(self.request)
-        context["region"] = api.region(self.request)
+        #context["provider"] = api.providers(self.request)
+        #context["region"] = api.region(self.request)
         return context
 
 

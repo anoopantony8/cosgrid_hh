@@ -103,19 +103,21 @@ class ImagesTable(tables.DataTable):
     name = tables.Column("name",
                          link=("horizon:cnext:images:detail"),
                          verbose_name=_("Name"))
-    provider = tables.Column("provider", verbose_name=_("Provider"))
-    region = tables.Column("region", verbose_name=_("Region"))
-    platform = tables.Column("platform", verbose_name=_("Platform"))
-    os = tables.Column("os", verbose_name=_("Os"))
-    cost = tables.Column("cost", verbose_name=_("Cost"))
-    description = tables.Column("description", verbose_name=_("Description"))
+    host = tables.Column("host", verbose_name=_("Host"))
+    backend = tables.Column("backend", verbose_name=_("Backend"))
+    ca = tables.Column("ca", verbose_name=_("CA"))
+    cert = tables.Column("cert", verbose_name=_("Cert"))
+    notes = tables.Column("notes", verbose_name=_("Notes"))
+
+    def get_object_id(self, vpn):
+        return vpn.name
 
     class Meta:
         name = "images"
-        row_class = UpdateRow
-        verbose_name = _("Images")
-        table_actions = (InstancesFilterAction,)
-        row_actions = (LaunchImage,)
+        #row_class = UpdateRow
+        verbose_name = _("VPN")
+        #table_actions = (InstancesFilterAction,)
+        #row_actions = (LaunchImage,)
 
 
 def get_image_type(image):

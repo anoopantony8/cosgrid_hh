@@ -6,8 +6,8 @@ from cnext import dashboard
 
 
 class Images(horizon.Panel):
-    name = _("Images")
+    name = _("VPN")
     slug = "images"
 
 
-#dashboard.Cnext.register(Images)
+dashboard.Cnext.register(Images)

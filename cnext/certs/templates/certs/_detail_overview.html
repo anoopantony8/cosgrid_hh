@@ -1,0 +1,39 @@
+{% load i18n sizeformat %}
+
+<h2><b>{% trans "Cert Overview" %}</b></h2>
+<div class="data row-fluid detail">
+  <h3><b>{{ cert.name }}</b></h3>
+  <hr class="header_rule">
+    <d1>
+        <dt><b>{% trans "Name" %}</b> </dt>
+        <dd>{{ cert.name}}</dd>
+        <dt><b>{% trans "Notes"  %}</b></dt>
+        <dd>{{ cert.notes }}</dd>
+        <dt><b>{% trans "Key Length" %}</b></dt>
+        <dd>{{  cert.key_length }}</dd>
+        <dt><b>{% trans "Digest" %}</b></dt>
+        <dd>{{  cert.digest }}</dd>
+        <dt><b>{% trans "Validity Start" %}</b></dt>
+        <dd>{{  cert.validity_start }}</dd>
+        <dt><b>{% trans "Validity End" %}</b></dt>
+        <dd>{{  cert.validity_end}}</dd>
+        <dt><b>{% trans "Serial No" %}</b></dt>
+        <dd>{{  cert.serial_number }}</dd>
+        <dt><b>{% trans "Certificertte" %}</b></dt>
+        <dd>{{  cert.certificertte}}</dd>
+        <dt><b>{% trans "Organization" %}</b></dt>
+        <dd>{{  cert.organization}}</dd>
+        <dt><b>{% trans "Email" %}</b></dt>
+        <dd>{{  cert.email}}</dd>
+        <dt><b>{% trans "Cound1y Code" %}</b></dt>
+        <dd>{{  cert.cound1y_code}}</dd>
+        <dt><b>{% trans "State" %}</b></dt>
+        <dd>{{  cert.state}}</dd>
+        <dt><b>{% trans "CA" %}</b></dt>
+        <dd>{{  cert.ca}}</dd>
+        <dt><b>{% trans "Private Key" %}</b></dt>
+        <dd>{{  cert.private_key}}</dd>
+    </d1>
+</div>
+
+

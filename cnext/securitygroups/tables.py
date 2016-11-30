@@ -2,6 +2,7 @@ import logging
 from django.core.urlresolvers import reverse
 from horizon import exceptions, tables
 from cnext_api import api
+from netjson_api import api as netjson_api
 from django.utils.translation import ugettext_lazy as _
 
 LOG = logging.getLogger(__name__)
@@ -54,16 +55,16 @@ class CreateGroup(tables.LinkAction):
 class UpdateRow(tables.Row):
     ajax = True
 
-    def get_data(self, request, sg_id):
-        security_group = api.inst_detail(request, sg_id)
-        return security_group
+    def get_data(self, request, ca_id):
+        ca = netjson_api.ca_view(request, ca_id)
+        return ca
  
-    def load_cells(self, security_g=None):
-        super(UpdateRow, self).load_cells(security_g)
+    def load_cells(self, ca=None):
+        super(UpdateRow, self).load_cells(ca)
         # Tag the row with the image category for client-side filtering.
         sg = self.datum
-        self.attrs['data-provider'] = sg.provider
-        self.attrs['data-region'] = sg.region
+        # self.attrs['data-provider'] = sg.provider
+        # self.attrs['data-region'] = sg.region
 
 class AddRule(tables.LinkAction):
     name = "add_rule"
@@ -113,20 +114,19 @@ class DeleteRule(tables.LinkAction):
 
 
 class SecurityGroupsTable(tables.DataTable):
-    name = tables.Column('name', link=("horizon:cnext:securitygroups:detail"),verbose_name=_("Name"))
-    instanceId = tables.Column('id', verbose_name=_("InstanceId"))
-    provider = tables.Column('provider', verbose_name=_("Provider"))
-    region = tables.Column('region', verbose_name=_("Region"))
-    description = tables.Column("description", verbose_name=_("Description"))
-    status = tables.Column('status', verbose_name=_("Status"))
-    
-    def get_object_id(self, sg):
-        return sg.id
+    name = tables.Column('name', link=("horizon:cnext:securitygroups:detail"), verbose_name=_("Name"))
+    notes = tables.Column('notes', verbose_name=_("Notes"))
+    digest = tables.Column('digest', verbose_name=_("Digest"))
+    organization = tables.Column('organization', verbose_name=_("Organization"))
+    validity_end = tables.Column('validity_end', verbose_name=_("Validity End"))
+
+    def get_object_id(self, ca):
+        return ca.id
 
     class Meta:
         name = "securitygroups"
         row_class = UpdateRow
-        verbose_name = _("Security Groups")
-        table_actions = (CreateGroup,)
-        row_actions = (AddRule,DeleteGroup,AddPort,DeleteRule,)
+        verbose_name = _("CAs")
+        # table_actions = (CreateGroup,)
+        # row_actions = (AddRule,DeleteGroup,AddPort,DeleteRule,)
 

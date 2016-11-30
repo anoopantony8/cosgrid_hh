@@ -1,32 +1,27 @@
 {% load i18n sizeformat parse_date %}
 {% load url from future %}
-
-<h3>{{snapshot.display_name }}</h3>
+<h3>{{config.name }}</h3>
 
 <div class="info row-fluid detail">
   <h4>{% trans "Info" %}</h4>
   <hr class="header_rule">
   <dl>
     <dt>{% trans "Name" %}</dt>
-    <dd>{{ snapshot.display_name }}</dd>
+    <dd>{{ config.name }}</dd>
     <dt>{% trans "ID" %}</dt>
-    <dd>{{ snapshot.id }}</dd>
-    {% if snapshot.display_description %}
-    <dt>{% trans "Description" %}</dt>
-    <dd>{{ snapshot.display_description }}</dd>
-    {% endif %}
+    <dd>{{ config.id }}</dd>
+    <dt>{% trans "Backend" %}</dt>
+    <dd>{{ config.backend }}</dd>
     <dt>{% trans "Status" %}</dt>
-    <dd>{{ snapshot.status|capfirst }}</dd>
-    <dt>{% trans "Volume" %}</dt>
-    <dd>
-      <a href="{% url 'horizon:project:volumes:detail' snapshot.volume_id %}">
-        {% if volume.display_name %}
-          {{ volume.display_name }}
-        {% else %}
-          {{ snapshot.volume_id }}
-        {% endif %}
-      </a>
-    </dd>
+    <dd>{{ config.status|capfirst }}</dd>
+    <dt>{% trans "Key" %}</dt>
+    <dd>{{ config.key }}</dd>
+    <dt>{% trans "MAC Address" %}</dt>
+    <dd>{{ config.mac_address }}</dd>
+    <dt>{% trans "Templates" %}</dt>
+    <dd>{{ config.templates }}</dd>
+    <dt>{% trans "VPN" %}</dt>
+    <dd>{{ config.vpn }}</dd>
   </dl>
 </div>
 
@@ -34,9 +29,7 @@
   <h4>{% trans "Specs" %}</h4>
   <hr class="header_rule">
   <dl>
-    <dt>{% trans "Size" %}</dt>
-    <dd>{{ snapshot.size }} {% trans "GB" %}</dd>
-    <dt>{% trans "Created" %}</dt>
-    <dd>{{ snapshot.created_at|parse_date }}</dd>
+     <dt>{% trans "Config" %}</dt>
+     <dd>{{ config.config }}</dd>
   </dl>
 </div>

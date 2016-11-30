@@ -6,8 +6,8 @@ from cnext import dashboard
 
 
 class Snapshots(horizon.Panel):
-    name = _("Snapshots")
+    name = _("Configs")
     slug = "snapshots"
 
 
-#dashboard.Cnext.register(Snapshots)
+dashboard.Cnext.register(Snapshots)

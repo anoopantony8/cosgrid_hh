@@ -8,11 +8,11 @@ LOG = logging.getLogger(__name__)
 
 class VPN:
     def __init__(self, name, host, backend, ca, cert, notes=None):
-        self.name = name,
-        self.host = host,
-        self.backend = backend,
-        self.ca = ca,
-        self.cert = cert,
+        self.name = nam
+        self.host = host
+        self.backend = backend
+        self.ca = ca
+        self.cert = cert
         self.notes = notes
 
 

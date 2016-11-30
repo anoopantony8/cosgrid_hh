@@ -8,11 +8,11 @@ LOG = logging.getLogger(__name__)
 
 class Template:
     def __init__(self, name, backend, template_type, default, auto_cert, vpn=None):
-        self.name = name,
-        self.backend = backend,
-        self.template_type = template_type,
-        self.default = default,
-        self.auto_cert = auto_cert,
+        self.name = name
+        self.backend = backend
+        self.template_type = template_type
+        self.default = default
+        self.auto_cert = auto_cert
         self.vpn = vpn
 
 

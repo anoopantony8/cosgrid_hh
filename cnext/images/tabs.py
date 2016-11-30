@@ -19,6 +19,7 @@ from django.utils.translation import ugettext_lazy as _
 from horizon import exceptions
 from horizon import tabs
 from cnext_api import api
+from netjson_api import api as netjson_api
 import re
 
 def striphtml(data):
@@ -31,17 +32,15 @@ class OverviewTab(tabs.Tab):
     template_name = "cnext/images/_detail_overview.html"
 
     def get_context_data(self, request):
-        image_id = self.tab_group.kwargs['image_id']
+        vpn_id = self.tab_group.kwargs['image_id']
         try:
-            image = api.image_detail(request,image_id)
-            image['shortDescription'] = striphtml(image['shortDescription'])
-            image['detailedDescription'] = striphtml(image['detailedDescription'])
+            vpn = netjson_api.vpn_view(request,vpn_id)
         except Exception:
             redirect = reverse('horizon:cnext:images:index')
             exceptions.handle(request,
-                              _('Unable to retrieve image details.'),
+                              _('Unable to retrieve VPN details.'),
                               redirect=redirect)
-        return {'image': image}
+        return {'image': vpn}
 
 
 class ImageDetailTabs(tabs.TabGroup):

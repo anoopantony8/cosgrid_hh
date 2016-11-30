@@ -87,13 +87,13 @@ class DetailView(tabs.TabView):
     
     def get_data(self):
             try:
-                inst=api.instance(self.request,self.kwargs['volume_id'])
+                inst=netjson_api.template_view(self.request,self.kwargs['volume_id'])
                 return inst
 
             except Exception:
                 redirect = reverse('horizon:project:volumes:index')
                 exceptions.handle(self.request,
-                                  _('Unable to retrieve volume details.'),
+                                  _('Unable to retrieve Template details.'),
                                   redirect=redirect)
 
 

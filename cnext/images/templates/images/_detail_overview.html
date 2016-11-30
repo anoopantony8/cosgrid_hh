@@ -7,11 +7,7 @@
   <hr class="header_rule">
   <dl>
     <dt>{% trans "Name" %}</dt>
-    <dd>{{ image.name|default:_("None") }}</dd>
-    {% if image.notes %}
-      <dt>{% trans "Notes" %}</dt>
-      <dd>{{ image.notes }}</dd>
-    {% endif %}
+    <dd>{{ image.name }}</dd>
     <dt>{% trans "Host" %}</dt>
     <dd>{{ image.host }}</dd>
     <dt>{% trans "Backend" %}</dt>
@@ -23,4 +19,11 @@
   </dl>
 </div>
 
+<div class="specs row-fluid detail">
+  <hr class="header_rule">
+  <dl>
+    <dt>{% trans "Notes" %}</dt>
+    <dd>{{ image.notes }}</dd>
+  </dl>
+</div>
 

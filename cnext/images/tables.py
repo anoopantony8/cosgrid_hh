@@ -110,7 +110,7 @@ class ImagesTable(tables.DataTable):
     notes = tables.Column("notes", verbose_name=_("Notes"))
 
     def get_object_id(self, vpn):
-        return vpn.name
+        return vpn.id
 
     class Meta:
         name = "images"

@@ -78,3 +78,25 @@ class UpdateView(forms.ModalFormView):
 class DetailView(tabs.TabView):
     tab_group_class = project_tabs.ImageDetailTabs
     template_name = 'cnext/images/detail.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context["image"] = self.get_data()
+        return context
+
+    def get_data(self):
+            try:
+                inst=netjson_api.vpn_view(self.request,self.kwargs['image_id'])
+                return inst
+
+            except Exception:
+                redirect = reverse('horizon:project:images:index')
+                exceptions.handle(self.request,
+                                  _('Unable to retrieve VPN details.'),
+                                  redirect=redirect)
+
+
+    def get_tabs(self, request, *args, **kwargs):
+        image = self.get_data()
+        return self.tab_group_class(request, image=image, **kwargs)

@@ -123,7 +123,7 @@ class TabledisplayTable(tables.DataTable):
                          verbose_name=_("vpn"))    
 
     def get_object_id(self, template):
-        return template.name
+        return template.id
  
     class Meta:
         name = "templates"

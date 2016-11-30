@@ -16,7 +16,7 @@ class Workspace(horizon.PanelGroup):
 class Cnext(horizon.Dashboard):
     name = _("Cnext")
     slug = "cnext"
-    panels = ('images', 'keypairs', 'securitygroups','instances','volume','snapshots',)  # Add your panels here.
+    panels = ('images', 'keypairs', 'securitygroups','instances','volume','snapshots', 'certs')  # Add your panels here.
     default_panel = 'keypairs'  # Specify the slug of the dashboard's default panel.
 
 horizon.register(Cnext)

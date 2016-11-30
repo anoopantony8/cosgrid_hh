@@ -8,6 +8,7 @@ from cnext.securitygroups import forms as project_forms
 from cnext.securitygroups import tabs as project_tabs
 from .tables import SecurityGroupsTable
 from cnext_api import api
+from netjson_api import api as netjson_api
 
 LOG = logging.getLogger(__name__)
 
@@ -19,17 +20,17 @@ class IndexView(tables.DataTableView):
 
     def get_data(self):
         try:
-            securitygroups = api.securitygroups(self.request)
+            cas = netjson_api.ca_list(self.request)
         except:
-            securitygroups = []
+            cas = []
             exceptions.handle(self.request,
-			   _('Unable to retrieve securitygroups'))
-        return securitygroups
+                              _('Unable to retrieve cas'))
+        return cas
      
     def get_context_data(self):
         context = super(IndexView, self).get_context_data()
-        context["provider"] = api.providers(self.request)
-        context["region"] = api.region(self.request)
+        # context["provider"] = api.providers(self.request)
+        # context["region"] = api.region(self.request)
         return context
 
 
@@ -93,20 +94,19 @@ class DetailView(tabs.TabView):
     
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
-        context["securitygroups"] = self.get_data()
+        context["cas"] = self.get_data()
         return context
     
     def get_data(self):
             try:
-                key_p=api.inst_detail(self.request,self.kwargs['security_group_id'])
+                ca = netjson_api.ca_view(self.request, self.kwargs['ca_id'])
+                return ca
             except Exception:
-                redirect = reverse('horizon:cnext:instances:index')
+                redirect = reverse('horizon:cnext:securitygroups:index')
                 exceptions.handle(self.request,
-                                  _('Unable to retrieve securitygroups details.'),
+                                  _('Unable to retrieve ca details.'),
                                   redirect=redirect)
-            return key_p
 
     def get_tabs(self, request, *args, **kwargs):
-        securitygroups = self.get_data()
-        print kwargs
-        return self.tab_group_class(request, securitygroups=securitygroups, **kwargs)
+        ca = self.get_data()
+        return self.tab_group_class(request, ca=ca, **kwargs)

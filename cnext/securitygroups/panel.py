@@ -6,8 +6,8 @@ from cnext import dashboard
 
 
 class Securitygroups(horizon.Panel):
-    name = _("Securitygroups")
+    name = _("CAs")
     slug = "securitygroups"
 
 
-#dashboard.Cnext.register(Securitygroups)
+dashboard.Cnext.register(Securitygroups)

@@ -2,6 +2,7 @@ import logging
 import httplib2
 import requests
 from cloud_mongo import trail
+from netjson_api.api import ca
 
 LOG = logging.getLogger(__name__)
 
@@ -49,11 +50,12 @@ def cert_list(request):
         if resp.status_code == 200 and body:
             ca_list = body['results']
             for cert in ca_list:
+                ca_name = ca.ca_name_from_url(request, cert['ca'])
                 certs.append(Cert(
                     cert['id'], cert['name'], cert['notes'], cert['key_length'], cert['digest'], cert['validity_start'],
                     cert['validity_end'],cert['country_code'], cert['state'], cert['city'], cert['organization'], cert['email'],
                     cert['common_name'], cert['extensions'],cert['serial_number'], cert['certificate'], cert['private_key'],
-                    cert['created'], cert['modified'], cert['revoked'], cert['revoked_at'], cert['ca']))
+                    cert['created'], cert['modified'], cert['revoked'], cert['revoked_at'], ca_name))
         else:
             raise
         return certs
@@ -75,6 +77,8 @@ def cert_view(request, cert_id):
         LOG.debug("Cert View Status %s" % resp.status_code)
         body = resp.json()
         if resp.status_code == 200 and body:
+            ca_name = ca.ca_name_from_url(request, body['ca'])
+            body['ca'] = ca_name
             return body
         else:
             raise

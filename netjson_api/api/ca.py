@@ -79,3 +79,21 @@ def ca_view(request, ca_id):
         logging.debug("Unable to get ca %s" % e.message)
         return {}
 
+def ca_name_from_url(request, ca_url):
+    try:
+        credential_username = request.user.cnextpublickey
+        credential_password = trail.encode_decode(request.user.cnextprivatekey, "decode")
+        endpoint = request.user.cnextendpoint
+        httpInst = httplib2.Http()
+        httpInst.add_credentials(name=credential_username, password=credential_password)
+        resp = requests.get(url=ca_url, auth=(credential_username, credential_password))
+        LOG.debug("CA View Status %s" % resp.status_code)
+        body = resp.json()
+        if resp.status_code == 200 and body:
+            return body['name']
+        else:
+            raise
+        return ''
+    except Exception as e:
+        logging.debug("Unable to get CA %s" % e.message)
+    return ''

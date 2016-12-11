@@ -2,5 +2,10 @@
 
 # Email specification for sending activation email. Give a valid gmail account.
 
-mail_id : notification@mail.com
+mail_id : notification@gmail.com
 password: secret
+netjson_cloud_name: vnf
+netjson_username: root
+netjson_password: root
+netjson_endpoint: http://192.168.1.28:8001
+

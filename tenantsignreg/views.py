@@ -11,9 +11,9 @@ from email.MIMEText import MIMEText
 from mongoengine import *
 from django.utils.translation import ugettext_lazy as _
 from wangle.role.forms import roledetail 
-from cloud_mongo.trail import User,Tenant,clouds,actions,roleaccess
+from cloud_mongo.trail import User,Tenant,clouds,actions,roleaccess, tenantclouds,encode_decode, roledetail, actions
 from tenantsignreg.forms import RegistrationForm
-from config import mail_id, pwd
+from config import mail_id, pwd, netjson_cloud_name, netjson_username, netjson_password, netjson_endpoint
 
 
 def register(request):
@@ -41,7 +41,23 @@ def register(request):
             envi1 = roledetail(roletype = "Tenant Admin",name="Tenant Admin", policy=[], access=access, tenantid=tenant.id)
             envi1.save()
             envi = User.create_user(username=email.lower(),email=email, password=password, roles=[envi1.id], key=token, tenantid=tenant.id,hp_attr = None)
-            envi.save()   
+            envi.save()  
+            netjson_cloud = clouds.objects(name='netjson').first()
+            cloud = tenantclouds(name=netjson_cloud_name, cloud_type='Public',
+                                 platform=netjson_cloud.name,
+                                 cloud_meta={"publickey": netjson_username, "privatekey": encode_decode(netjson_password, "encode"),
+                                             "endpoint": netjson_endpoint},
+                                 tenantid=tenant.id,
+                                 cloudid=netjson_cloud.id)
+            cloud.save() 
+            roles = roledetail.objects(tenantid = tenant.id)
+            allowed_action = actions.objects.first().allowed
+            for role in roles:
+                if role.roletype == "Tenant Admin" and role.name == "Tenant Admin":
+                    i = {"cloudid":cloud.id,"provider":"ALL","region":"ALL","allowed": allowed_action}
+                    roledetail.objects(id = role.id).update(push__policy=i)
+                else:
+                    pass
             t = loader.get_template("activation_email.txt")
             c = Context({'name': username,
                          'activation_key' : token,
@@ -176,5 +192,8 @@ def create_master_db_schema():
     action = actions(allowed=allowed)
     action.save()
     
+    cloud = clouds(name='Amazon',type=["Public"],credential_fields=["Public Key","Secret Key","Default Region"])
+    cloud.save()
+
     cloud = clouds(name='netjson',type=["Public"],credential_fields=["Username","Password","Endpoint"])
     cloud.save()
